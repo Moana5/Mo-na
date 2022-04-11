@@ -64,13 +64,27 @@ app.post('/webhook', express.json(), (req, res)=>{
             }
 
     }
- 
+ function Confirmation_code(agent) {
+        //agent.add("Sending response from Webhook server as v1.1.11.1");
+        var name = agent.context.get("details").parameters.ProposerName;
+        var pname = agent.context.get("details").parameters.policyname;
+        var date = agent.context.get("details").parameters.riskdate; 
+        var status = agent.context.get("details").parameters.policystatus; 
+
+        console.log(name);
+      
+        agent.add("Hi " + name + "! here are the details for policy number 86455 - " + pname + " plan issued on " + date + " which is currently  " + status + ". The life assured is Secured.Your annual annuity amount is Rs 500000.");
+
+    }
+    
     
 
     var intentMap = new Map();
    // intentMap.set('finalConfirmation', finalConfirmation)
     intentMap.set('Verify_PolicyNum', Verify_PolicyNum)
     intentMap.set('Verify_DOB', Verify_DOB)
+    intentMap.set('Confirmation_code', Confirmation_code)
+
     agent.handleRequest(intentMap);
 
 });
